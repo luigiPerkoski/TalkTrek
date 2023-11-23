@@ -3,8 +3,16 @@ from .models import Room, Message
 
 def index(request):
 
-    mensage = Message.objects.filter(user=request.user.id)
+    messages = Message.objects.filter(user=request.user.id)
+    rooms = Room.objects.filter(user=request.user.id)
 
-    context = {'msg': mensage}
+
+    context = {
+        'messages': messages,
+        'rooms': rooms,
+    }
 
     return render(request, 'pages/index.html', context)
+
+def mensagens(request):
+    ...
