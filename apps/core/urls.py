@@ -1,6 +1,8 @@
-from . import views
+from .views import index, crud
 from django.urls import path
 
 urlpatterns = [
-    path('', views.index, name = 'index'),
+    path('', index.index, name='index'),
+    path('room/<int:id>/', index.messages, name='message'),
+
 ]
