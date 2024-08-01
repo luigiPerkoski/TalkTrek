@@ -10,11 +10,12 @@ from .serializers import *
 
 import json
 
-# Create your views here.
+
+
 @api_view(['GET'])
 def GetUsers(request):
 
-    if request.method ==   'GET':
+    if request.method == 'GET':
 
         users = CoreUser.objects.all()
 
@@ -24,4 +25,16 @@ def GetUsers(request):
     return Response(status= status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def GetUsersById(request, id):
+    try:
+        user = CoreUser.objects.get(pk=id)
+    except CoreUser.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'GET':
+        serializer = CoreUserSerializer(user)
+        return Response(serializer.data)
+    
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
