@@ -12,8 +12,37 @@ import json
 
 
 
-@api_view(['GET'])
-def GetUsers(request):
+@api_view(['GET','POST','PUT','DELETE'])
+def UsersView(request, id = None):
+
+    if id:
+
+
+        try:
+            user = CoreUser.objects.get(pk=id)
+        except CoreUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+        if request.method == 'GET':
+            serializer = CoreUserSerializer(user)
+            return Response(serializer.data)
+        
+
+        if request.method == 'PUT': #TODO: Create put method for put the user by ID
+            ...
+        
+
+        if request.method == 'DELETE': #TODO: Create delete method for delete the user by ID
+            ...
+
+
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
 
     if request.method == 'GET':
 
@@ -22,19 +51,21 @@ def GetUsers(request):
         serializers = CoreUserSerializer(users, many= True)
         return Response(serializers.data)
     
+
+
+    if request.method == 'POST': #TODO: Resolver esse pepino depois 
+        
+        new_user = request.data
+    
+        serializer = CoreUserSerializer(data=new_user)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
     return Response(status= status.HTTP_400_BAD_REQUEST)
+        
 
-
-@api_view(['GET'])
-def GetUsersById(request, id):
-    try:
-        user = CoreUser.objects.get(pk=id)
-    except CoreUser.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    if request.method == 'GET':
-        serializer = CoreUserSerializer(user)
-        return Response(serializer.data)
-    
-    return Response(status=status.HTTP_400_BAD_REQUEST)
 
