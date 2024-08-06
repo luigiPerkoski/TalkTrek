@@ -5,7 +5,7 @@ from .models import *
 class CoreUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoreUser
-        fields = '__all__'
+        fields = ['id', 'username', 'email', 'online_status', 'is_active'  ]
 
 
 class RoomSerializer(serializers.ModelSerializer):
