@@ -1,7 +1,8 @@
-from django.urls import re_path
+from django.urls import path
 from . import views
 
 urlpatterns = [
-    re_path(r'^user/(?P<id>\d+)?/?$', views.UsersView, name='users'),
+    path('user/', views.users, name='users'),
+    path('user/<id>', views.user_by_id, name='user_by_id'),
 ]
 
