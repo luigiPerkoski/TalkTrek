@@ -9,6 +9,9 @@ class CoreUserSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
+    friends = serializers.PrimaryKeyRelatedField(queryset=CoreUser.objects.all(), many=True)
+    user = serializers.PrimaryKeyRelatedField(queryset=CoreUser.objects.all())
+
     class Meta:
         model = Room
         fields = '__all__'
