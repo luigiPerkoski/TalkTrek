@@ -12,6 +12,7 @@ class CoreUser(AbstractUser):
 
 class Message(models.Model):
     STATUS_CHOICES = [
+        ('not sent', 'not sent'),
         ('sent', 'Sent'),
         ('received', 'Received'),
         ('read', 'Read'),
@@ -20,7 +21,7 @@ class Message(models.Model):
     id = models.AutoField(primary_key=True)
     create_date = models.DateTimeField(auto_now_add=True)
     texto = models.TextField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='sent') 
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='not sent') 
     user = models.ForeignKey(CoreUser, on_delete=models.CASCADE)
 
     def __str__(self):
